@@ -1,6 +1,6 @@
 import { useState } from "react";
-import {LoginRequest, loginUser, RegisterRequest, registerUser} from "../config/api";
 import { finalize } from "rxjs";
+import { LoginRequest, loginUser, RegisterRequest, registerUser } from "../config/api";
 import { useAuth } from "../services/AuthService";
 
 export const useUserAuthentication = (
@@ -18,13 +18,13 @@ export const useUserAuthentication = (
       .subscribe({
         next: (response) => {
           const user = {
-            authData: window.btoa(request.email + ':' + request.password),
+            authData: window.btoa(request.username + ':' + request.password),
             username: response.data.username
           };
           saveUser(user);
           onSuccess();
         },
-        error: (err) => onError(err)
+        error: (err) => onError(err.message)
     });
 
     return () => subscription.unsubscribe();
@@ -37,7 +37,7 @@ export const useUserAuthentication = (
       .pipe(finalize(() => setIsFetching(false)))
       .subscribe({
         next: () => onSuccess(),
-        error: (err) => onError(err)
+        error: (err) => onError(err.response.data.message)
       });
 
     return () => subscription.unsubscribe();

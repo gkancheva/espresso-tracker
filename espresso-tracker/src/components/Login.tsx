@@ -1,35 +1,51 @@
-import {TextField} from "@mui/material";
+import { useNavigate } from "react-router";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import {useEffect, useState} from "react";
-import {useUserAuthentication} from "../services/UserService";
+import React, { useEffect, useState } from "react";
+import { useUserAuthentication } from "../services/UserService";
+import { Notification } from "../components/Notification";
+
+const MIN_LENGTH = 3;
+const MAX_LENGTH = 20;
 
 export const Login = () => {
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [message, setMessage] = useState('');
+  const [notificationIsVisible, setNotificationIsVisible] = useState(false);
+
+  const setNotification = (message: string) => {
+    setMessage(message);
+    setNotificationIsVisible(true);
+  }
 
   const { sendLogin } = useUserAuthentication(
-    () => console.log("logged in!"),
-    (err) => console.log(err)
+    () => navigate('/espresso-list'),
+    (err) => setNotification(err)
   );
 
-  const checkString = (str: string) => str && str.trim().length > 0;
+  const checkInput = (str: string) => {
+    return (str ? str.trim().length > MIN_LENGTH : false) &&
+      (str.trim().length <= MAX_LENGTH);
+  }
 
-  const handleEmailChange = (input: string) => {
-    if (!checkString(input)) {
-      setEmailError(true);
+  const handleUsernameChange = (input: string) => {
+    if (!checkInput(input)) {
+      setUsernameError(true);
       return;
     }
-    setPasswordError(false);
-    setEmail(input);
+    setUsernameError(false);
+    setUsername(input);
   }
 
   const handlePasswordChange = (input: string) => {
-    if (!checkString(input)) {
+    if (!checkInput(input)) {
       setPasswordError(true);
       return;
     }
@@ -39,7 +55,7 @@ export const Login = () => {
 
   const handleLogin = () => {
     const request = {
-      'email': email,
+      'username': username,
       'password': password
     }
 
@@ -48,48 +64,55 @@ export const Login = () => {
   }
 
   useEffect(() => {
-    if (checkString(email) && checkString(password)) {
+    if (checkInput(username) && checkInput(password)) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
     }
-  }, [email, password]);
+  }, [username, password]);
 
   return (
-    <Paper style={{padding: 20, width: 500, height: '70vh', margin: '20px auto'}}>
-      <TextField
-        error={emailError}
-        style={{marginTop: 8}}
-        label='Email'
-        type='text'
-        id='email'
-        fullWidth
-        required
-        variant={'standard'}
-        onChange={(event) => handleEmailChange(event.target.value)}
-        helperText={'Email cannot be empty'} />
-      <TextField
-        style={{marginTop: 8}}
-        error={passwordError}
-        label='Password'
-        type='password'
-        id='password'
-        fullWidth
-        required variant={'standard'}
-        onChange={(event) => handlePasswordChange(event.target.value)}
-        helperText={'Password cannot be empty'}/>
-      <Button
-        style={{marginTop: 8}}
-        disabled={btnDisabled}
-        variant={'contained'}
-        type="submit"
-        fullWidth
-        onClick={() => handleLogin()}>
-        Log in
-      </Button>
-      <Button href={'/register'} style={{marginTop: 8}} type={'button'} fullWidth>
-        Register
-      </Button>
-    </Paper>
+    <>
+      <Notification
+        type={'error'}
+        message={message}
+        isVisible={notificationIsVisible}
+        notifyIsVisible={setNotificationIsVisible} />
+      <Paper style={{padding: 20, width: 500, margin: '20px auto'}}>
+        <TextField
+          error={usernameError}
+          style={{marginTop: 8}}
+          label='Username'
+          type='text'
+          id='username'
+          fullWidth
+          required
+          variant={'standard'}
+          onChange={(event) => handleUsernameChange(event.target.value)}
+          helperText={usernameError && 'Username is empty'} />
+        <TextField
+          style={{marginTop: 8}}
+          error={passwordError}
+          label='Password'
+          type='password'
+          id='password'
+          fullWidth
+          required variant={'standard'}
+          onChange={(event) => handlePasswordChange(event.target.value)}
+          helperText={passwordError && 'Password cannot be empty'}/>
+        <Button
+          style={{marginTop: 8}}
+          disabled={btnDisabled}
+          variant={'contained'}
+          type="submit"
+          fullWidth
+          onClick={() => handleLogin()}>
+          Log in
+        </Button>
+        <Button href={'/register'} style={{marginTop: 8}} type={'button'} fullWidth>
+          Register
+        </Button>
+      </Paper>
+    </>
   );
 }

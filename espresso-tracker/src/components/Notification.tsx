@@ -1,25 +1,41 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Alert, { AlertColor} from '@mui/material/Alert';
 
 import { useState } from "react";
-import { Snackbar } from "@mui/material";
 
 interface NotificationProps {
   type?: AlertColor;
   message: string;
   isVisible: boolean;
+  notifyIsVisible: (isVisible: boolean) => void;
 }
 
-export const Notification = ({ type, message, isVisible }: NotificationProps): JSX.Element => {
-  const [visible, setVisible] = useState(isVisible);
+const TIMEOUT_SECONDS = 30000;
+
+export const Notification = ({ type, message, isVisible, notifyIsVisible }: NotificationProps): JSX.Element => {
+  const [visible, setIsVisible] = useState(isVisible);
+
+  useEffect(() => {
+    setIsVisible(isVisible);
+  }, [isVisible]);
+
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      setIsVisible(false)
+      notifyIsVisible(false);
+    }, TIMEOUT_SECONDS);
+
+    return () => clearTimeout(timeId);
+  }, []);
 
   return (
-    <Snackbar
-      sx={{ minWidth: 600 }}
-      open={visible}
-      autoHideDuration={6000}
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-      <Alert severity={type} onClose={() => setVisible(false)}>{message}</Alert>
-    </Snackbar>
+    <>
+      { visible &&
+        <Alert severity={type} onClick={() => {
+          setIsVisible(false);
+          notifyIsVisible(false);
+        }}>{message}</Alert>
+      }
+    </>
   );
 }

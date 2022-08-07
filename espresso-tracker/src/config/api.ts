@@ -1,10 +1,9 @@
-import {AxiosObservable} from "axios-observable/lib/axios-observable.interface";
-import {axiosInstance} from "../config/AxiosConfig";
-import {EspressoSetting} from "../models/EspressoSetting";
-import {useAuth} from "../services/AuthService";
+import { AxiosObservable } from "axios-observable/lib/axios-observable.interface";
+import { axiosInstance } from "../config/AxiosConfig";
+import { useAuth } from "../services/AuthService";
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -18,16 +17,24 @@ interface LoginResponse {
   username: string;
 }
 
-const { authData } = useAuth();
+export const useApiAuth = () => {
+  const { getUser } = useAuth();
 
-export const getEspressoSettings = (): AxiosObservable<EspressoSetting[]> =>
-  axiosInstance.get<EspressoSetting[]>("/1/espresso-settings", {
-    headers: { 'Authorization': 'Basic ' + authData }
-  });
+  const username = () => getUser()?.username;
+  const authData = () => getUser()?.authData;
+
+  const headers = () => {
+    return {
+      headers: { 'Authorization': 'Basic ' + authData() }
+    }
+  }
+
+  return { headers, username };
+}
 
 export const loginUser = (request: LoginRequest): AxiosObservable<LoginResponse> =>
   axiosInstance.post<LoginResponse>("/users/login", request);
 
 
 export const registerUser = (request: RegisterRequest): AxiosObservable<string> =>
-  axiosInstance.post<string>("/user/register", request);
+  axiosInstance.post<string>("/users/register", request);

@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import {Axios} from "axios-observable";
+import { Axios } from "axios-observable";
 
 const axiosRequestConfiguration: AxiosRequestConfig = {
     baseURL: 'http://localhost:8080',

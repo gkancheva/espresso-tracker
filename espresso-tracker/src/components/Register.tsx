@@ -3,10 +3,14 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import {useUserAuthentication} from "../services/UserService";
+import {useNavigate} from "react-router";
+import {Notification} from "../components/Notification";
 
-const MIN_LENGHT = 3;
+const MIN_LENGTH = 3;
+const MAX_LENGTH = 20;
 
 export const Register = () => {
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -17,103 +21,137 @@ export const Register = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [notificationVisible, setNotificationVisible] = useState(false);
+  const [message, setMessage] = useState('');
 
   const { sendRegister } = useUserAuthentication(
-    () => console.log("Registered!"),
-    (err) => console.log(err)
+    () => navigate("/login"),
+    (errMessage) => {
+      setMessage(errMessage);
+      setNotificationVisible(true);
+    }
   );
 
-  const checkString = (str: string) => str && str.trim().length > MIN_LENGHT;
+  const checkInput = (str: string) => {
+    return (str ? str.trim().length > MIN_LENGTH : false) &&
+      (str.trim().length <= MAX_LENGTH);
+  }
 
   const handleEmailChange = (input: string) => {
-    if (!checkString(input)) {
+    if (!checkInput(input)) {
       setEmailError(true);
       return;
     }
-    setPasswordError(false);
+    setEmailError(false);
     setEmail(input);
   }
 
   const handlePasswordChange = (input: string) => {
-    if (!checkString(input)) {
+    if (!checkInput(input)) {
       setPasswordError(true);
-      return;
-    }
-    if (password !== confirmPassword) {
-      setConfirmPasswordError(true);
-      setPasswordError(true);
-      setConfirmPassword('');
-      setPassword('');
       return;
     }
     setPasswordError(false);
     setPassword(input);
   }
 
+  const handleConfirmPasswordChange = (input: string) => {
+    if (password !== input) {
+      setConfirmPasswordError(true);
+      return;
+    }
+    setConfirmPasswordError(false);
+    setConfirmPassword(input);
+  }
+
+  const handleUsernameChange = (input: string) => {
+    if (!checkInput(input)) {
+      setUsernameError(true);
+      return;
+    }
+    setUsernameError(false);
+    setUsername(input);
+  }
+
   const handleRegister = () => {
     const request = {
       'email': email,
       'password': password,
-      'username': username ? username : email
+      'username': username
     }
 
     sendRegister(request);
-
   }
 
   useEffect(() => {
-    if (checkString(email) && checkString(password)) {
+    if (checkInput(email) && checkInput(password) && checkInput(username) && confirmPassword === password) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
     }
-  }, [email, password, username]);
+  }, [email, password, username, confirmPassword]);
 
   return (
-    <Paper style={{padding: 20, width: 500, height: '70vh', margin: '20px auto'}}>
-      <TextField
-        error={emailError}
-        style={{marginTop: 8}}
-        label='Email'
-        type='text'
-        id='email'
-        fullWidth
-        required
-        variant={'standard'}
-        onChange={(event) => handleEmailChange(event.target.value)}
-        helperText={'Email cannot be empty'} />
-      <TextField
-        style={{marginTop: 8}}
-        error={passwordError}
-        label='Password'
-        type='password'
-        id='password'
-        fullWidth
-        required variant={'standard'}
-        onChange={(event) => handlePasswordChange(event.target.value)}
-        helperText={'Password cannot be empty'}/>
-      <TextField
-        style={{marginTop: 8}}
-        error={password !== confirmPassword}
-        label='Confirm password'
-        type='password'
-        id='confirmPassword'
-        fullWidth
-        required variant={'standard'}
-        onChange={(event) => handlePasswordChange(event.target.value)}
-        helperText={'Password doesnot match'}/>
-      <Button
-        style={{marginTop: 8}}
-        disabled={btnDisabled}
-        variant={'contained'}
-        type="submit"
-        fullWidth
-        onClick={() => handleRegister()}>
-        Log in
-      </Button>
-      <Button href={'/register'} style={{marginTop: 8}} type={'button'} fullWidth>
-        Register
-      </Button>
-    </Paper>
+    <>
+      { <Notification
+        type='error'
+        message={message}
+        notifyIsVisible={setNotificationVisible}
+        isVisible={notificationVisible} /> }
+      <Paper style={{padding: 20, width: 500, margin: '20px auto'}}>
+        <TextField
+          error={emailError}
+          label='Email'
+          type='text'
+          id='email'
+          fullWidth
+          required
+          variant={'standard'}
+          onChange={(event) => handleEmailChange(event.target.value)}
+          helperText={emailError && 'Email cannot be empty'} />
+        <TextField
+          error={usernameError}
+          label='Username'
+          type='text'
+          id='username'
+          fullWidth
+          required
+          variant={'standard'}
+          onChange={(event) => handleUsernameChange(event.target.value)}
+          helperText={usernameError && 'Username should have at least 3 characters length'} />
+        <TextField
+          error={passwordError}
+          label='Password'
+          type='password'
+          id='password'
+          fullWidth
+          required
+          variant={'standard'}
+          onChange={(event) => handlePasswordChange(event.target.value)}
+          helperText={passwordError && 'Password should have at least 3 characters length'}/>
+        <TextField
+          error={confirmPasswordError}
+          label='Confirm password'
+          type='password'
+          id='confirmPassword'
+          fullWidth
+          required
+          variant={'standard'}
+          onChange={(event) => handleConfirmPasswordChange(event.target.value)}
+          helperText={confirmPasswordError && 'Password does not match'}/>
+        <Button
+          style={{ marginTop: 8 }}
+          disabled={btnDisabled}
+          variant={'contained'}
+          type="submit"
+          fullWidth
+          onClick={() => handleRegister()}>
+          Register
+        </Button>
+        <Button style={{ marginTop: 8 }} href={'/login'} type={'button'} fullWidth>
+          Log in
+        </Button>
+      </Paper>
+    </>
   );
 }

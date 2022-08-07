@@ -5,44 +5,37 @@ interface User {
 
 interface UserAuthProps {
   saveUser: (user: User) => void;
-  user: () => User | undefined;
+  logoutUser: () => void;
+  getUser: () => User | undefined;
   isAuthenticated: () => boolean;
-  authData: () => string;
 }
 
-window.onbeforeunload = () => {
-  localStorage.removeItem(USER_KEY);
-}
+window.onbeforeunload = () => localStorage.removeItem(USER_KEY);
 
 const USER_KEY = 'currentUser';
 
 export const useAuth = (): UserAuthProps => {
 
-  const saveUser = (user: User) => {
+  const saveUser = (user: User) =>
     localStorage.setItem(USER_KEY, JSON.stringify(user));
+
+  const logoutUser = () => {
+    localStorage.removeItem(USER_KEY);
+    console.log("User: " + localStorage.getItem(USER_KEY));
   }
 
   const getUser = (): User | undefined => {
     const userAsJson = localStorage.getItem(USER_KEY);
-    if (userAsJson === undefined || userAsJson === null) {
-      return undefined;
+    if (userAsJson !== undefined && userAsJson !== null) {
+      return JSON.parse(userAsJson);
     }
-    return JSON.parse(userAsJson);
+    return undefined;
   }
 
   const isAuthenticated = () => {
     const user = getUser();
-    console.log("user: " + JSON.stringify(user));
     return user !== null && user !== undefined;
   }
 
-  const authData = (): string => {
-    const user = getUser();
-    if (user != null) {
-      return user.authData;
-    }
-    throw new Error('User is unauthenticated');
-  }
-
-  return { saveUser, user: getUser, isAuthenticated, authData }
+  return { saveUser, logoutUser, getUser, isAuthenticated }
 }

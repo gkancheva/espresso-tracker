@@ -9,25 +9,37 @@ import Paper from '@mui/material/Paper';
 import { formatDate } from "../utils/DateUtils";
 import { useEspressoSettingsService } from "../services/EspressoSettingsService";
 import dayjs from "dayjs";
-import {useEffect} from "react";
-import {EspressoSetting} from "../models/EspressoSetting";
-import {EspressoSettingDetails} from "../components/EspressoSettingDetails";
+import { useEffect } from "react";
+import { EspressoSetting } from "../models/EspressoSetting";
+import { EspressoSettingDetails } from "../components/EspressoSettingDetails";
+import { CircularProgress } from "@mui/material";
+import Button from "@mui/material/Button";
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router";
 
 export const EspressoSettingsTable = () => {
-
   const { isFetching, getEspressoSet, data } = useEspressoSettingsService();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEspressoSet();
   }, []);
 
   const onRowClicked = (espressoSetting: EspressoSetting) => {
-    console.log('details clicked: ' + espressoSetting.id);
     return <EspressoSettingDetails espressoSetting={espressoSetting} />
   }
 
   return (
     <TableContainer component={Paper}>
+      { isFetching && <CircularProgress /> }
+      <Button
+        onClick={() => navigate('/add-new-espresso-shot')}
+        size='small'
+        style={{ margin: 4 }}
+        variant="outlined"
+        endIcon={<AddIcon />}>
+        Add new shot
+      </Button>
       <Table sx={{minWidth: 650}} aria-label='simple table'>
         <TableHead>
           <TableRow>
