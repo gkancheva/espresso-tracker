@@ -1,4 +1,4 @@
-package com.softuni.espresso.tracker.model;
+package com.softuni.espresso.tracker.model.web;
 
 import lombok.Builder;
 import lombok.Getter;

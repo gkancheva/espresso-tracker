@@ -25,13 +25,23 @@ public class BakeryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(
+        nullable = false,
+        unique = true,
+        columnDefinition = "TEXT")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String address;
 
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String webSite;
+
+    @Column(columnDefinition = "TEXT")
+    private String imgSrc;
 
     @ManyToMany
     @JoinTable(

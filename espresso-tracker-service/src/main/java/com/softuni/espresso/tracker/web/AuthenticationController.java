@@ -1,7 +1,7 @@
 package com.softuni.espresso.tracker.web;
 
-import com.softuni.espresso.tracker.model.UserRequest;
-import com.softuni.espresso.tracker.model.UserResponse;
+import com.softuni.espresso.tracker.model.web.UserRequest;
+import com.softuni.espresso.tracker.model.web.UserResponse;
 import com.softuni.espresso.tracker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,14 @@ public class AuthenticationController {
 
 
     @PostMapping("register")
-    public void registerAndLogin(@RequestBody UserRequest userRequest) {
-        userService.registerAndLogin(userRequest);
+    public ResponseEntity<Void> register(@RequestBody UserRequest userRequest) {
+        userService.register(userRequest);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("login")
     public ResponseEntity<UserResponse> login(@RequestBody UserRequest user) {
-        UserDetails loggedInUser = userService.login(user.getEmail());
+        UserDetails loggedInUser = userService.login(user);
         UserResponse response = UserResponse.builder()
                 .username(loggedInUser.getUsername())
                 .build();
