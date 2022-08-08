@@ -16,3 +16,9 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+
+espresso-tracker-service:
+  mail:
+    host: localhost
+    port: 1025
+    default-sender-address: "admin@espresso-tracker-service.com"

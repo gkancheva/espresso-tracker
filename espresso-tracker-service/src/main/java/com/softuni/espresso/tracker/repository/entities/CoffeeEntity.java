@@ -33,6 +33,9 @@ public class CoffeeEntity {
     private LocalDate roastedOnDate;
 
     @Column(nullable = false)
+    private LocalDate dateCreated;
+
+    @Column(nullable = false)
     private String origin;
 
     private String description;
