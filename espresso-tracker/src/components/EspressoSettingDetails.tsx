@@ -22,7 +22,7 @@ export const EspressoSettingDetails = ({ espressoSetting }: EspressoSettingDetai
             {espressoSetting.coffee.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {espressoSetting.coffee.bakery} {formatDate(espressoSetting.coffee.roastedOnDate)}
+            {espressoSetting.coffee.bakery.name} {formatDate(espressoSetting.coffee.roastedOnDate)}
           </Typography>
         </CardContent>
       </CardActionArea>

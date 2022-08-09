@@ -11,6 +11,7 @@ import { GuardedRoute } from "./components/GuardedRoute";
 import { AddNewEspressoShot } from "./components/AddNewEspressoShot";
 import { BakeryList } from "./components/BakeryList";
 import { AddNewCoffeeBakery } from "./components/AddNewCoffeeBakery";
+import { AddNewCoffee } from "./components/AddNewCoffee";
 
 export default function App () {
   return (
@@ -34,6 +35,12 @@ export default function App () {
             path={'/add-new-bakery'}
             element={
               <GuardedRoute component={<AddNewCoffeeBakery />} />
+            }
+          />
+          <Route
+            path={'/add-new-coffee'}
+            element={
+              <GuardedRoute component={<AddNewCoffee />} />
             }
           />
           <Route path={'/bakeries'} element={<BakeryList />} />

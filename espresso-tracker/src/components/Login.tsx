@@ -5,9 +5,7 @@ import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
 import { useUserAuthentication } from "../services/UserService";
 import { Notification } from "../components/Notification";
-
-const MIN_LENGTH = 3;
-const MAX_LENGTH = 20;
+import { checkInput } from "../utils/StringUtil";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -29,11 +27,6 @@ export const Login = () => {
     () => navigate('/espresso-list'),
     (err) => setNotification(err)
   );
-
-  const checkInput = (str: string) => {
-    return (str ? str.trim().length > MIN_LENGTH : false) &&
-      (str.trim().length <= MAX_LENGTH);
-  }
 
   const handleUsernameChange = (input: string) => {
     if (!checkInput(input)) {

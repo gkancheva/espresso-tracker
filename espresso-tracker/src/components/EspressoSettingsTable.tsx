@@ -53,7 +53,7 @@ export const EspressoSettingsTable = () => {
           {data.map((row: EspressoSetting) => (
             <TableRow key={row.id} onClick={() => onRowClicked(row)}>
               <TableCell>{row.coffee.name}</TableCell>
-              <TableCell>{row.coffee.bakery}</TableCell>
+              <TableCell>{row.coffee.bakery.name}</TableCell>
               <TableCell>{formatDate(dayjs(row.coffee.roastedOnDate))}</TableCell>
               <TableCell>5/5</TableCell>
             </TableRow>

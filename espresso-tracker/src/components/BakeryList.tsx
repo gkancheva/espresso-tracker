@@ -29,6 +29,9 @@ export const BakeryList = () => {
       <AddButton
         onClick={() => navigate('/add-new-bakery')}
         text='Add new bakery'/>
+      <AddButton
+        onClick={() => navigate('/add-new-coffee')}
+        text='Add new coffee' />
       { notificationIsVisible && errMessage &&
         <Notification
           isVisible={notificationIsVisible}

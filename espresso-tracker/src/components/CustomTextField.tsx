@@ -5,7 +5,7 @@ interface Props {
   label: string;
   onChange: (input: string) => void;
   checkInput: (input: string) => boolean;
-  helperText: string;
+  helperText?: string;
   required?: boolean;
 }
 

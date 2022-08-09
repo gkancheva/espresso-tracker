@@ -1,12 +1,12 @@
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import {useEffect, useState} from "react";
-import {useUserAuthentication} from "../services/UserService";
-import {useNavigate} from "react-router";
-import {Notification} from "../components/Notification";
+import { useEffect, useState } from "react";
+import { useUserAuthentication } from "../services/UserService";
+import { useNavigate } from "react-router";
+import { Notification } from "../components/Notification";
+import { checkInput } from "../utils/StringUtil";
 
-const MIN_LENGTH = 3;
 const MAX_LENGTH = 20;
 
 export const Register = () => {
@@ -32,13 +32,8 @@ export const Register = () => {
     }
   );
 
-  const checkInput = (str: string) => {
-    return (str ? str.trim().length > MIN_LENGTH : false) &&
-      (str.trim().length <= MAX_LENGTH);
-  }
-
   const handleEmailChange = (input: string) => {
-    if (!checkInput(input)) {
+    if (!checkInput(input, MAX_LENGTH)) {
       setEmailError(true);
       return;
     }
@@ -47,7 +42,7 @@ export const Register = () => {
   }
 
   const handlePasswordChange = (input: string) => {
-    if (!checkInput(input)) {
+    if (!checkInput(input, MAX_LENGTH)) {
       setPasswordError(true);
       return;
     }
@@ -65,7 +60,7 @@ export const Register = () => {
   }
 
   const handleUsernameChange = (input: string) => {
-    if (!checkInput(input)) {
+    if (!checkInput(input, MAX_LENGTH)) {
       setUsernameError(true);
       return;
     }
@@ -84,7 +79,10 @@ export const Register = () => {
   }
 
   useEffect(() => {
-    if (checkInput(email) && checkInput(password) && checkInput(username) && confirmPassword === password) {
+    if (checkInput(email, MAX_LENGTH) &&
+      checkInput(password, MAX_LENGTH) &&
+      checkInput(username, MAX_LENGTH) &&
+      confirmPassword === password) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);

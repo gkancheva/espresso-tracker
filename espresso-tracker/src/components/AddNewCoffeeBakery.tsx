@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AlertColor } from "@mui/material/Alert";
 import { useNavigate } from "react-router";
+import { checkInput } from "../utils/StringUtil";
 
-const MIN_LENGTH = 3;
 const MAX_LENGTH = 30;
 
 export const AddNewCoffeeBakery = () => {
@@ -33,18 +33,12 @@ export const AddNewCoffeeBakery = () => {
   }
 
   const { sendCreateBakery } = useBakeryService(
-    (id) =>  {
+    () =>  {
       updateNotification(`Bakery '${name}' successfully created`, 'success');
       navigate('/bakeries');
     },
     (err) => updateNotification(err, 'error')
   );
-
-  const checkInput = (str: string, max?: number) => {
-    const result = (str ? str.trim().length > MIN_LENGTH : false)
-    const res2 = (max ? str.trim().length <= max : true);
-    return result && res2;
-  }
 
   const verifyAllFields = () => {
     return checkInput(name, MAX_LENGTH) &&
