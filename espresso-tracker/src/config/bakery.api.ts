@@ -1,7 +1,6 @@
 import { AxiosObservable } from "axios-observable/lib/axios-observable.interface";
 import { axiosInstance } from "../config/AxiosConfig";
 import { Bakery } from "../models/Bakery";
-import { useApiAuth } from "../config/api";
 
 export interface BakeryRequest {
   name: string;
@@ -12,13 +11,12 @@ export interface BakeryRequest {
 }
 
 export const useBakeryApi = () => {
-  const { headers } = useApiAuth();
 
   const getBakeries = (): AxiosObservable<Bakery[]> =>
     axiosInstance.get<Bakery[]>(`/bakeries`);
 
   const createBakery = (request: BakeryRequest): AxiosObservable<number> =>
-    axiosInstance.post<number>(`/bakeries`, request, headers());
+    axiosInstance.post<number>(`/bakeries`, request);
 
   return { getBakeries, createBakery }
 }
