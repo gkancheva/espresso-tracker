@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CoffeeTools {
+public class CoffeeToolsResponse {
     private CoffeeTool coffeeMachine;
     private CoffeeTool grinder;
 }

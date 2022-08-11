@@ -3,7 +3,7 @@ package com.softuni.espresso.tracker.service;
 import com.softuni.espresso.tracker.model.CoffeeTool;
 import com.softuni.espresso.tracker.model.mapper.CoffeeToolMapper;
 import com.softuni.espresso.tracker.model.web.CoffeeToolRequest;
-import com.softuni.espresso.tracker.model.web.CoffeeTools;
+import com.softuni.espresso.tracker.model.web.CoffeeToolsResponse;
 import com.softuni.espresso.tracker.repository.CoffeeToolRepository;
 import com.softuni.espresso.tracker.repository.UserRepository;
 import com.softuni.espresso.tracker.model.entities.CoffeeToolEntity;
@@ -22,12 +22,12 @@ public class CoffeeToolsService {
     private final CoffeeToolRepository coffeeToolRepository;
     private final CoffeeToolMapper coffeeToolMapper;
 
-    public CoffeeTools getCoffeeTools(String username) {
+    public CoffeeToolsResponse getCoffeeTools(String username) {
         UserEntity user = findUser(username);
         return convertToResponse(user);
     }
 
-    public CoffeeTools createUpdateCoffeeTool(String username, CoffeeToolRequest request) {
+    public CoffeeToolsResponse createUpdateCoffeeTool(String username, CoffeeToolRequest request) {
         Optional<CoffeeToolEntity> optCoffeeTool = coffeeToolRepository
                 .findByCoffeeToolTypeAndAndName(request.getCoffeeToolType(), request.getName());
         CoffeeToolEntity coffeeToolEntity;
@@ -49,11 +49,11 @@ public class CoffeeToolsService {
         return convertToResponse(result);
     }
 
-    private CoffeeTools convertToResponse (UserEntity user) {
+    private CoffeeToolsResponse convertToResponse (UserEntity user) {
         CoffeeTool coffeeMachine = coffeeToolMapper.map(user.getCoffeeMachine());
         CoffeeTool grinder = coffeeToolMapper.map(user.getGrinder());
 
-        return CoffeeTools.builder()
+        return CoffeeToolsResponse.builder()
                 .coffeeMachine(coffeeMachine)
                 .grinder(grinder)
                 .build();

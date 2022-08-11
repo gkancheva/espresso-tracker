@@ -13,6 +13,8 @@ interface Props {
   onEditFinished: (text?: string) => void;
 }
 
+const MAX_LENGTH_NAME = 100;
+
 export const EditableTextField = ({ label, value, helperText, onEditFinished }: Props ) => {
   const [editing, setEditing] = useState(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -28,7 +30,7 @@ export const EditableTextField = ({ label, value, helperText, onEditFinished }: 
                 label={label}
                 helperText={helperText}
                 onChange={(input) => setCurrentValue(input)}
-                checkInput={(input) => checkInputIsValid(input)} />
+                checkInput={(input) => checkInputIsValid(input, MAX_LENGTH_NAME)} />
               <CheckIcon onClick={() => onEditFinished(currentValue)} sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
             </Box>
           </div>
