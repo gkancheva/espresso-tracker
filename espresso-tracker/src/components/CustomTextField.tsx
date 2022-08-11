@@ -7,9 +7,10 @@ interface Props {
   checkInput: (input: string) => boolean;
   helperText?: string;
   required?: boolean;
+  defaultValue?: string;
 }
 
-export const CustomTextField = ({ label, onChange, checkInput, helperText, required }: Props) => {
+export const CustomTextField = ({ label, onChange, checkInput, helperText, required, defaultValue }: Props) => {
   const [hasError, setHasError] = useState(false);
 
   const handleOnChange = (input: string) => {
@@ -24,6 +25,7 @@ export const CustomTextField = ({ label, onChange, checkInput, helperText, requi
   return (
     <TextField
       error={hasError}
+      defaultValue={defaultValue}
       style={{marginTop: 8}}
       label={label}
       type='text'

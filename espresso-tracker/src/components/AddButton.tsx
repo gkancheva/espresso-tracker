@@ -19,7 +19,7 @@ export const AddButton = ({ onClick, text }: AddButtonProps) => {
           onClick={onClick}
           size='small'
           style={{ margin: 4 }}
-          variant="outlined"
+          variant='outlined'
           endIcon={<AddIcon />}>
           {text}
         </Button>
