@@ -1,7 +1,7 @@
 package com.softuni.espresso.tracker.repository;
 
-import com.softuni.espresso.tracker.repository.entities.CoffeeToolEntity;
-import com.softuni.espresso.tracker.repository.entities.CoffeeToolType;
+import com.softuni.espresso.tracker.model.entities.CoffeeToolEntity;
+import com.softuni.espresso.tracker.model.CoffeeToolType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,8 +4,8 @@ import com.softuni.espresso.tracker.model.EspressoSetting;
 import com.softuni.espresso.tracker.model.mapper.EspressoSettingMapper;
 import com.softuni.espresso.tracker.repository.EspressoSettingsRepository;
 import com.softuni.espresso.tracker.repository.UserRepository;
-import com.softuni.espresso.tracker.repository.entities.EspressoSettingEntity;
-import com.softuni.espresso.tracker.repository.entities.UserEntity;
+import com.softuni.espresso.tracker.model.entities.EspressoSettingEntity;
+import com.softuni.espresso.tracker.model.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

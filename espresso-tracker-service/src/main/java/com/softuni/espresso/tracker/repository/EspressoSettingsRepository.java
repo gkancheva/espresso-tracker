@@ -1,6 +1,6 @@
 package com.softuni.espresso.tracker.repository;
 
-import com.softuni.espresso.tracker.repository.entities.EspressoSettingEntity;
+import com.softuni.espresso.tracker.model.entities.EspressoSettingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

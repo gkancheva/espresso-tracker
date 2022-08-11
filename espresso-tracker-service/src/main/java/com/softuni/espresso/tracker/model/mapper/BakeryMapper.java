@@ -3,7 +3,7 @@ package com.softuni.espresso.tracker.model.mapper;
 import com.softuni.espresso.tracker.model.Bakery;
 import com.softuni.espresso.tracker.model.BakeryWithCoffees;
 import com.softuni.espresso.tracker.model.web.BakeryRequest;
-import com.softuni.espresso.tracker.repository.entities.BakeryEntity;
+import com.softuni.espresso.tracker.model.entities.BakeryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

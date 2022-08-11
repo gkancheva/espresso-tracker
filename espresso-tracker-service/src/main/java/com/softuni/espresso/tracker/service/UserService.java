@@ -5,7 +5,7 @@ import com.softuni.espresso.tracker.model.web.UserRequest;
 import com.softuni.espresso.tracker.model.UserRole;
 import com.softuni.espresso.tracker.model.mapper.UserMapper;
 import com.softuni.espresso.tracker.repository.UserRepository;
-import com.softuni.espresso.tracker.repository.entities.UserEntity;
+import com.softuni.espresso.tracker.model.entities.UserEntity;
 import com.softuni.espresso.tracker.service.exceptions.UserException;
 import com.softuni.espresso.tracker.service.exceptions.UserUnauthorizedException;
 import lombok.RequiredArgsConstructor;

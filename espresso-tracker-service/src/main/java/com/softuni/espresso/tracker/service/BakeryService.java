@@ -5,7 +5,7 @@ import com.softuni.espresso.tracker.model.BakeryWithCoffees;
 import com.softuni.espresso.tracker.model.web.BakeryRequest;
 import com.softuni.espresso.tracker.model.mapper.BakeryMapper;
 import com.softuni.espresso.tracker.repository.BakeryRepository;
-import com.softuni.espresso.tracker.repository.entities.BakeryEntity;
+import com.softuni.espresso.tracker.model.entities.BakeryEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

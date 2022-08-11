@@ -1,4 +1,4 @@
-package com.softuni.espresso.tracker.repository.entities;
+package com.softuni.espresso.tracker.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;

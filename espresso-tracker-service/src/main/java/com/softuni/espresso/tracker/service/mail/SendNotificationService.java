@@ -2,8 +2,8 @@ package com.softuni.espresso.tracker.service.mail;
 
 import com.softuni.espresso.tracker.repository.CoffeeRepository;
 import com.softuni.espresso.tracker.repository.UserRepository;
-import com.softuni.espresso.tracker.repository.entities.CoffeeEntity;
-import com.softuni.espresso.tracker.repository.entities.UserEntity;
+import com.softuni.espresso.tracker.model.entities.CoffeeEntity;
+import com.softuni.espresso.tracker.model.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.softuni.espresso.tracker.repository.entities;
+package com.softuni.espresso.tracker.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,42 +8,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "espresso_settings")
+@Table(name = "coffees")
 @Getter
 @Setter
-public class EspressoSettingEntity {
+public class CoffeeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    private UserEntity user;
-
-    @ManyToOne
-    private CoffeeEntity coffee;
+    @Column(nullable = false)
+    private String name;
 
     @ManyToOne
-    private CoffeeToolEntity coffeeMachine;
-
-    @ManyToOne
-    private CoffeeToolEntity grinder;
+    @JoinColumn(name = "bakery_id")
+    private BakeryEntity bakery;
 
     @Column(nullable = false)
-    private double dose;
+    private LocalDate roastedOnDate;
 
     @Column(nullable = false)
-    private String grindingFineness;
+    private LocalDate dateCreated;
 
     @Column(nullable = false)
-    private double brewingTemperature;
+    private String origin;
+
+    private String description;
 
     @Column(nullable = false)
-    private double brewingPressure;
-
-    @Column(nullable = false)
-    private double volume;
+    private int active;
 }
