@@ -27,10 +27,10 @@ public class EspressoSettingEntity {
     private CoffeeEntity coffee;
 
     @ManyToOne
-    private CoffeeMachineEntity coffeeMachine;
+    private CoffeeToolEntity coffeeMachine;
 
     @ManyToOne
-    private GrinderEntity grinder;
+    private CoffeeToolEntity grinder;
 
     @Column(nullable = false)
     private double dose;

@@ -5,16 +5,18 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "coffee_machines")
+@Table(name = "coffee_tools")
 @Getter
 @Setter
-public class CoffeeMachineEntity {
+public class CoffeeToolEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +25,7 @@ public class CoffeeMachineEntity {
     @Column(nullable = false)
     private String name;
 
-}
+    @Enumerated(EnumType.STRING)
+    private CoffeeToolType coffeeToolType;
 
+}

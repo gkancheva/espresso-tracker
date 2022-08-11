@@ -9,6 +9,7 @@ import com.softuni.espresso.tracker.repository.entities.BakeryEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.enterprise.context.ContextException;
 import java.util.List;
@@ -43,6 +44,7 @@ public class BakeryService {
         }
     }
 
+    @Transactional
     public BakeryWithCoffees getBakery(Long bakeryId) {
         Optional<BakeryEntity> optBakery = repository.findByIdWithCoffees(bakeryId);
         if (optBakery.isEmpty()) {
