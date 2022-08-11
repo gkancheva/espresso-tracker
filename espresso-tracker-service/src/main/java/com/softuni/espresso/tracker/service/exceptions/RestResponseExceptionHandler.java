@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.enterprise.context.ContextException;
+import javax.validation.ValidationException;
 
 @Slf4j
 @RestControllerAdvice
@@ -30,6 +31,15 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(new ApiError(HttpStatus.CONFLICT, ex.getMessage()));
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<ApiError> handleBadRequest(RuntimeException ex) {
+        log.error("Exception: {}", ex.getMessage(), ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
 }

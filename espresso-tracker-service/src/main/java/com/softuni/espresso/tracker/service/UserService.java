@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.enterprise.context.ContextException;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,18 @@ public class UserService implements UserDetailsService {
                 .findByUsername(username)
                 .map(this::mapUser)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
+
+    public UserEntity findUser (String username) {
+        Optional<UserEntity> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new ContextException("Missing information about user");
+        }
+        return user.get();
+    }
+
+    public UserEntity saveUser(UserEntity user) {
+        return userRepository.save(user);
     }
 
     private CustomUser mapUser(UserEntity entity) {

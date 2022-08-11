@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @RequiredArgsConstructor
 public class Coffee {
+    private final long id;
     private final String name;
     private final String bakery;
     private final String origin;

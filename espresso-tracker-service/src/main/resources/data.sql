@@ -1,10 +1,3 @@
---delete from espresso_settings;
---delete from coffees;
---delete from users;
---delete from grinders;
---delete from coffee_machines;
---delete from bakeries;
-
 insert into bakeries (address, name, phone_number, web_site, img_src)
     values ('ул. „Околовръстен път“ 214 (Sofia Ring Mall, top level), София 1434, България', 'Cofferro', '+359 877 550 777', 'https://coffero.com/', 'https://cdncloudcart.com/9980/files/image/fv5a0029-edit.jpg'),
            ('58, Lyuben Karavelov Str., Sofia', 'Dabov - Sofia 1', '+359 882 477 000', 'https://dabov.coffee/locations/liuben-karavelov/', 'https://dabov.coffee/wp-content/uploads/2021/10/dabov-specialty-coffee-luiben-karavelov-square.jpg'),
@@ -22,5 +15,5 @@ insert into coffees (name, origin, roasted_on_date, bakery_id, date_created, act
            ('Kenya', 'Kenya', '2022-08-09', 1, '2022-08-08', 1),
            ('Honduras', 'Honduras', '2022-08-10', 2, '2022-08-08', 1);
 
-insert into espresso_settings (brewing_pressure, brewing_temperature, dose, grinding_fineness, volume, coffee_id, coffee_machine_id, grinder_id, user_id)
-    values (9, 91.5, 18, '12C', 20, 1, 1, 1, 1);
+insert into espresso_settings (brewing_pressure, brewing_temperature, dose, grinding_fineness, volume, coffee_id, coffee_machine_id, grinder_id, user_id, extract_duration_sec)
+    values (9, 91.5, 18, '12C', 20, 1, 1, 1, 1, 20);

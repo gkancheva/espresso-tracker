@@ -7,6 +7,7 @@ import com.softuni.espresso.tracker.service.BakeryService;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,19 +23,19 @@ public class BakeryController {
 
     private final BakeryService bakeryService;
 
-    @GetMapping("/bakeries")
+    @GetMapping(value = "/bakeries", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Bakery>> getBakeries() {
         List<Bakery> bakeries = bakeryService.getAllBakeries();
         return ResponseEntity.ok(bakeries);
     }
 
-    @PostMapping("/bakeries")
+    @PostMapping(value = "/bakeries", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> createBakery(@RequestBody @NotNull BakeryRequest request) {
         long bakeryId = bakeryService.createBakery(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(bakeryId);
     }
 
-    @GetMapping("/bakeries/{id}")
+    @GetMapping(value = "/bakeries/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BakeryWithCoffees> getBakery(@PathVariable @NotNull Long id) {
         BakeryWithCoffees bakery = bakeryService.getBakery(id);
         return ResponseEntity.ok().body(bakery);

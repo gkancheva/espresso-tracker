@@ -1,5 +1,6 @@
 package com.softuni.espresso.tracker.service;
 
+import com.softuni.espresso.tracker.model.Coffee;
 import com.softuni.espresso.tracker.model.mapper.CoffeeMapper;
 import com.softuni.espresso.tracker.model.web.CoffeeRequest;
 import com.softuni.espresso.tracker.repository.BakeryRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.enterprise.context.ContextException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +38,11 @@ public class CoffeeService {
         } catch (Exception e) {
             throw new ContextException(e.getMessage());
         }
+    }
+
+    public List<Coffee> getCoffees() {
+        List<CoffeeEntity> entities = coffeeRepository.findAll();
+        return coffeeMapper.mapToList(entities);
     }
 
 }

@@ -5,25 +5,23 @@ import com.softuni.espresso.tracker.model.mapper.CoffeeToolMapper;
 import com.softuni.espresso.tracker.model.web.CoffeeToolRequest;
 import com.softuni.espresso.tracker.model.web.CoffeeToolsResponse;
 import com.softuni.espresso.tracker.repository.CoffeeToolRepository;
-import com.softuni.espresso.tracker.repository.UserRepository;
 import com.softuni.espresso.tracker.model.entities.CoffeeToolEntity;
 import com.softuni.espresso.tracker.model.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ContextException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CoffeeToolsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final CoffeeToolRepository coffeeToolRepository;
     private final CoffeeToolMapper coffeeToolMapper;
 
     public CoffeeToolsResponse getCoffeeTools(String username) {
-        UserEntity user = findUser(username);
+        UserEntity user = userService.findUser(username);
         return convertToResponse(user);
     }
 
@@ -40,12 +38,12 @@ public class CoffeeToolsService {
             coffeeToolEntity = optCoffeeTool.get();
         }
 
-        UserEntity user = findUser(username);
+        UserEntity user = userService.findUser(username);
         switch (request.getCoffeeToolType()) {
             case GRINDER -> user.setGrinder(coffeeToolEntity);
             case COFFEE_MACHINE -> user.setCoffeeMachine(coffeeToolEntity);
         }
-        UserEntity result = userRepository.save(user);
+        UserEntity result = userService.saveUser(user);
         return convertToResponse(result);
     }
 
@@ -57,14 +55,6 @@ public class CoffeeToolsService {
                 .coffeeMachine(coffeeMachine)
                 .grinder(grinder)
                 .build();
-    }
-
-    private UserEntity findUser (String username) {
-        Optional<UserEntity> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new ContextException("Missing information about user");
-        }
-        return user.get();
     }
 
 }
