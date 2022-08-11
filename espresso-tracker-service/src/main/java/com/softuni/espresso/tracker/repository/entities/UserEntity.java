@@ -11,7 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -35,5 +40,11 @@ public class UserEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @ManyToMany
+    @JoinTable(
+            inverseJoinColumns = @JoinColumn(name = "coffee_id"),
+            joinColumns = @JoinColumn(name = "user_id"))
+    private List<CoffeeEntity> coffees = new ArrayList<>();
 
 }

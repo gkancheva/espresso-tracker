@@ -13,7 +13,7 @@ public class BakeryRequest {
     private static final int MIN_LENGTH = 3;
 
     @NotEmpty(message = "Name must be provided")
-    @Size(min = MIN_LENGTH)
+    @Size(min = MIN_LENGTH, max = 255)
     private String name;
 
     @NotEmpty

@@ -16,20 +16,20 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(UserUnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    protected ResponseEntity<Object> handleUnauthorized(RuntimeException ex) {
+    protected ResponseEntity<ApiError> handleUnauthorized(RuntimeException ex) {
         log.error("Exception: {}", ex.getMessage(), ex);
-        return new ResponseEntity<>(
-                new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage()),
-                HttpStatus.UNAUTHORIZED);
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage()));
     }
 
     @ExceptionHandler({UserException.class, ContextException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex) {
+    protected ResponseEntity<ApiError> handleConflict(RuntimeException ex) {
         log.error("Exception: {}", ex.getMessage(), ex);
-        return new ResponseEntity<>(
-                new ApiError(HttpStatus.CONFLICT, ex.getMessage()),
-                HttpStatus.CONFLICT);
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ApiError(HttpStatus.CONFLICT, ex.getMessage()));
     }
 
 }

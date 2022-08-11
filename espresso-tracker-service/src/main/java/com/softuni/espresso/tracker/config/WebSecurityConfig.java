@@ -5,6 +5,7 @@ import com.softuni.espresso.tracker.repository.UserRepository;
 import com.softuni.espresso.tracker.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,8 +32,9 @@ public class WebSecurityConfig {
         http.cors().configurationSource(corsConfigurationSource())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/login", "/users/register", "/bakeries")
+                .antMatchers("/users/login", "/users/register")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/bakeries").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

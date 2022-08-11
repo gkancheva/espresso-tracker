@@ -17,9 +17,10 @@ insert into grinders (name) values ('Sette');
 
 insert into users (email, password, user_role, username) values ('admin@admin.com', 'test', 'ADMIN', 'admin');
 
-insert into coffees (name, origin, roasted_on_date, bakery_id, date_created)
-    values ('Nicaragua', 'Nicaragua', '2022-08-08', 1, '2022-08-08'),
-           ('Kenya', 'Kenya', '2022-08-08', 1, '2022-08-08');
+insert into coffees (name, origin, roasted_on_date, bakery_id, date_created, active)
+    values ('Nicaragua', 'Nicaragua', '2022-08-08', 1, '2022-08-08', 1),
+           ('Kenya', 'Kenya', '2022-08-09', 1, '2022-08-08', 1),
+           ('Honduras', 'Honduras', '2022-08-10', 2, '2022-08-08', 1);
 
 insert into espresso_settings (brewing_pressure, brewing_temperature, dose, grinding_fineness, volume, coffee_id, coffee_machine_id, grinder_id, user_id)
     values (9, 91.5, 18, '12C', 20, 1, 1, 1, 1);

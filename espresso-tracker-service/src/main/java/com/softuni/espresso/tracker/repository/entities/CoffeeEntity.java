@@ -18,6 +18,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CoffeeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -39,4 +40,7 @@ public class CoffeeEntity {
     private String origin;
 
     private String description;
+
+    @Column(nullable = false)
+    private int active;
 }
