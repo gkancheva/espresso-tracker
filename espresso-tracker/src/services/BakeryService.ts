@@ -6,7 +6,7 @@ export const useBakeryService = (onSuccess: (data: any) => void, onFailure: (err
   const getBakeryList = () => {
     const subscription = getBakeries().subscribe({
       next: (response) => onSuccess(response.data),
-      error: (err) => onFailure(err.response.data)
+      error: (err) => onFailure(err.message)
     });
 
     return () => subscription.unsubscribe();
@@ -14,11 +14,8 @@ export const useBakeryService = (onSuccess: (data: any) => void, onFailure: (err
 
   const sendCreateBakery = (request: BakeryRequest) => {
     const subscription = createBakery(request).subscribe({
-      next: (response) => {
-        console.log("Response.data: " + response.data)
-        onSuccess(response.data)
-      },
-      error: (err) => onFailure(err.response.data.message)
+      next: (response) => onSuccess(response.data),
+      error: (err) => onFailure(err.message)
     });
     return () => subscription.unsubscribe();
   }

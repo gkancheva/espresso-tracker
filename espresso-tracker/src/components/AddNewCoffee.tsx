@@ -13,11 +13,16 @@ import { CustomTextField } from "../components/CustomTextField";
 import { Notification } from "../components/Notification";
 import { Bakery } from "../models/Bakery";
 import { useBakeryService } from "../services/BakeryService";
-import { checkInput, INPUT_TXT_MAX_LENGTH } from "../utils/StringUtil";
+import { checkInputIsValid, INPUT_TXT_MAX_LENGTH } from "../utils/StringUtil";
+import { useCoffeeService } from "../services/CoffeeService";
+import { useNavigate } from "react-router";
 
 const DATE_FORMAT = 'DD-MM-YYYY'
+const MAX_NAME_LENGTH = 100;
 
 export const AddNewCoffee = () => {
+  const navigate = useNavigate();
+
   const [message, setMessage] = useState("");
   const [notificationVisible, setNotificationVisible] = useState(false);
   const [notificationType, setNotificationType] = useState<AlertColor>();
@@ -25,18 +30,31 @@ export const AddNewCoffee = () => {
 
   const [name, setName] = useState<string>('');
   const [bakeryName, setBakeryName] = useState<string>('');
-  const [roastedOn, setRoastedOn] = useState<Dayjs | null>();
+  const [roastedOn, setRoastedOn] = useState<Dayjs>(dayjs());
   const [origin, setOrigin] = useState<string>('');
   const [description, setDescription] = useState<string | undefined>();
   const [bakeries, setBakeries] = useState<Bakery[]>([] as Bakery[]);
 
+  const updateNotification = (message: string, type: AlertColor) => {
+    setMessage(message);
+    setNotificationType(type);
+    setNotificationVisible(true);
+  }
+
   const { getBakeryList } = useBakeryService(
     (data) => setBakeries(data),
     (err) => {
-      setMessage(err);
-      setNotificationType('error');
-      setNotificationVisible(true);
+      console.log("Here: " + JSON.stringify(err));
+      updateNotification(err, 'error')
     }
+  );
+
+  const { createCoffee } = useCoffeeService(
+    () => {
+      updateNotification(`Successfully created coffee: '${name}'`, 'success');
+      navigate("/bakeries")
+    },
+    (err) => updateNotification(err, 'error')
   );
 
   useEffect(() => {
@@ -48,16 +66,31 @@ export const AddNewCoffee = () => {
     setRoastedOn(date);
   }
 
+  const checkAllInputsAreValid = () => {
+    if (roastedOn.isAfter(dayjs())) {
+      updateNotification('Roasted on date must be not in the future', 'warning');
+      return false;
+    }
+    return checkInputIsValid(name, MAX_NAME_LENGTH) &&
+      checkInputIsValid(bakeryName) &&
+      checkInputIsValid(origin, MAX_NAME_LENGTH) &&
+      (description ? (description.trim().length < INPUT_TXT_MAX_LENGTH) : true);
+  }
+
   const handleCreateNewCoffee = () => {
     const bakeryId = bakeries[bakeries.findIndex((b) => b.name === bakeryName)].id;
+    if (!checkAllInputsAreValid() || bakeryId <= 0) {
+      setBtnDisabled(true);
+      updateNotification('Fields are invalid, check each field text helper', 'error');
+    }
     const request = {
       name: name,
       bakeryId: bakeryId,
-      roastedOnDate: roastedOn,
+      roastedOnDate: roastedOn!,
       origin: origin,
       description: description
     };
-    console.log("Request: " + JSON.stringify(request));
+    createCoffee(request);
   }
 
   const handleBakerySelected = (event: SelectChangeEvent) => {
@@ -66,7 +99,7 @@ export const AddNewCoffee = () => {
   };
 
   useEffect(() => {
-    if (checkInput(name) && checkInput(bakeryName) && checkInput(origin) && roastedOn) {
+    if (!checkAllInputsAreValid()) {
       setBtnDisabled(false);
     }
   }, [name, bakeryName, origin, roastedOn, description]);
@@ -86,9 +119,9 @@ export const AddNewCoffee = () => {
         <Paper style={{ margin: 8, padding: 8 }}>
           <CustomTextField
             label='Name'
-            helperText='Name cannot be empty'
+            helperText='Name cannot be empty, length must be between 3 and 100 characters'
             onChange={(input) => setName(input)}
-            checkInput={(input) => checkInput(input)} />
+            checkInput={(input) => checkInputIsValid(input, MAX_NAME_LENGTH)} />
 
           <InputLabel id="bakery-label-id">Bakery</InputLabel>
           <Select
@@ -121,8 +154,8 @@ export const AddNewCoffee = () => {
           <CustomTextField
             label={'Origin'}
             onChange={setOrigin}
-            helperText={'Provide origin of the coffee beans'}
-            checkInput={(input) => checkInput(input)} />
+            helperText={'Provide origin of the coffee beans. Length must be between 3 and 100 characters'}
+            checkInput={(input) => checkInputIsValid(input, MAX_NAME_LENGTH)} />
           <CustomTextField
             label={'Description'}
             onChange={setDescription}

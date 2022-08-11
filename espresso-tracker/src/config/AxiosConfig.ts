@@ -25,13 +25,21 @@ axiosInstance.interceptors.request.use(
 );
 
 const UNAUTHORIZED_STATUS_CODE = 401;
+const ERR_NETWORK = 'ERR_NETWORK';
 
 axiosInstance.interceptors.response.use(
   response => {
       return response
   }, (error) => {
-      if (error.response.status === UNAUTHORIZED_STATUS_CODE) {
+    if (error.response.status === UNAUTHORIZED_STATUS_CODE) {
+      const currentLocation = window.location;
+      if (currentLocation.pathname !== '/login') {
         (window as Window).location = '/login';
       }
+    }
+    if (error.response?.data) {
+      return Promise.reject(error.response.data);
+    }
+    return Promise.reject(error);
   }
 )

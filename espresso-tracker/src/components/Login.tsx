@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
 import { useUserAuthentication } from "../services/UserService";
 import { Notification } from "../components/Notification";
-import { checkInput } from "../utils/StringUtil";
+import { checkInputIsValid } from "../utils/StringUtil";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export const Login = () => {
   );
 
   const handleUsernameChange = (input: string) => {
-    if (!checkInput(input)) {
+    if (!checkInputIsValid(input)) {
       setUsernameError(true);
       return;
     }
@@ -38,7 +38,7 @@ export const Login = () => {
   }
 
   const handlePasswordChange = (input: string) => {
-    if (!checkInput(input)) {
+    if (!checkInputIsValid(input)) {
       setPasswordError(true);
       return;
     }
@@ -57,7 +57,7 @@ export const Login = () => {
   }
 
   useEffect(() => {
-    if (checkInput(username) && checkInput(password)) {
+    if (checkInputIsValid(username) && checkInputIsValid(password)) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);

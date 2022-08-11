@@ -12,6 +12,7 @@ import { AddNewEspressoShot } from "./components/AddNewEspressoShot";
 import { BakeryList } from "./components/BakeryList";
 import { AddNewCoffeeBakery } from "./components/AddNewCoffeeBakery";
 import { AddNewCoffee } from "./components/AddNewCoffee";
+import { BakeryDetails } from "./components/BakeryDetails";
 
 export default function App () {
   return (
@@ -43,6 +44,7 @@ export default function App () {
               <GuardedRoute component={<AddNewCoffee />} />
             }
           />
+          <Route path={'/bakeries/:id'} element={<BakeryDetails />}/>
           <Route path={'/bakeries'} element={<BakeryList />} />
           <Route path={'/login'} element={<Login />} />
           <Route path={'/register'} element={<Register />} />

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AlertColor } from "@mui/material/Alert";
 import { useNavigate } from "react-router";
-import { checkInput } from "../utils/StringUtil";
+import { checkInputIsValid } from "../utils/StringUtil";
 
 const MAX_LENGTH = 30;
 
@@ -41,10 +41,10 @@ export const AddNewCoffeeBakery = () => {
   );
 
   const verifyAllFields = () => {
-    return checkInput(name, MAX_LENGTH) &&
-      checkInput(address) &&
-      checkInput(phone, MAX_LENGTH) &&
-      checkInput(webSite);
+    return checkInputIsValid(name, MAX_LENGTH) &&
+      checkInputIsValid(address) &&
+      checkInputIsValid(phone, MAX_LENGTH) &&
+      checkInputIsValid(webSite);
   }
 
   useEffect(() => {
@@ -81,22 +81,22 @@ export const AddNewCoffeeBakery = () => {
             label='Name'
             helperText='Name cannot be empty'
             onChange={(input) => setName(input)}
-            checkInput={(input) => checkInput(input, MAX_LENGTH)} />
+            checkInput={(input) => checkInputIsValid(input, MAX_LENGTH)} />
           <CustomTextField
             label={'Address'}
             onChange={setAddress}
             helperText='Address must be at least three character long'
-            checkInput={(input) => checkInput(input)} />
+            checkInput={(input) => checkInputIsValid(input)} />
           <CustomTextField
             label={'Phone number'}
             onChange={setPhone}
             helperText={'Provide phone number for contact'}
-            checkInput={(input) => checkInput(input, MAX_LENGTH)} />
+            checkInput={(input) => checkInputIsValid(input, MAX_LENGTH)} />
           <CustomTextField
             label={'Web site'}
             onChange={setWebSite}
             helperText={'Provide url to web site'}
-            checkInput={(input) => checkInput(input)} />
+            checkInput={(input) => checkInputIsValid(input)} />
           <CustomTextField
             label={'Image source url'}
             onChange={setImgSource}

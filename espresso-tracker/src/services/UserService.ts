@@ -37,7 +37,7 @@ export const useUserAuthentication = (
       .pipe(finalize(() => setIsFetching(false)))
       .subscribe({
         next: () => onSuccess(),
-        error: (err) => onError(err.response.data.message)
+        error: (err) => onError(err.message)
       });
 
     return () => subscription.unsubscribe();

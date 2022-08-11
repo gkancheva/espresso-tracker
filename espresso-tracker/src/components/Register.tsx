@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useUserAuthentication } from "../services/UserService";
 import { useNavigate } from "react-router";
 import { Notification } from "../components/Notification";
-import { checkInput } from "../utils/StringUtil";
+import { checkInputIsValid } from "../utils/StringUtil";
 
 const MAX_LENGTH = 20;
 
@@ -33,7 +33,7 @@ export const Register = () => {
   );
 
   const handleEmailChange = (input: string) => {
-    if (!checkInput(input, MAX_LENGTH)) {
+    if (!checkInputIsValid(input, MAX_LENGTH)) {
       setEmailError(true);
       return;
     }
@@ -42,7 +42,7 @@ export const Register = () => {
   }
 
   const handlePasswordChange = (input: string) => {
-    if (!checkInput(input, MAX_LENGTH)) {
+    if (!checkInputIsValid(input, MAX_LENGTH)) {
       setPasswordError(true);
       return;
     }
@@ -60,7 +60,7 @@ export const Register = () => {
   }
 
   const handleUsernameChange = (input: string) => {
-    if (!checkInput(input, MAX_LENGTH)) {
+    if (!checkInputIsValid(input, MAX_LENGTH)) {
       setUsernameError(true);
       return;
     }
@@ -79,9 +79,9 @@ export const Register = () => {
   }
 
   useEffect(() => {
-    if (checkInput(email, MAX_LENGTH) &&
-      checkInput(password, MAX_LENGTH) &&
-      checkInput(username, MAX_LENGTH) &&
+    if (checkInputIsValid(email, MAX_LENGTH) &&
+      checkInputIsValid(password, MAX_LENGTH) &&
+      checkInputIsValid(username, MAX_LENGTH) &&
       confirmPassword === password) {
       setBtnDisabled(false);
     } else {
