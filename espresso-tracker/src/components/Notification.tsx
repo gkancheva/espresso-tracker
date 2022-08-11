@@ -31,7 +31,7 @@ export const Notification = ({ type, message, isVisible, notifyIsVisible }: Noti
   return (
     <>
       { visible &&
-        <Alert severity={type} onClick={() => {
+        <Alert severity={type ? type : 'error'} onClick={() => {
           setIsVisible(false);
           notifyIsVisible(false);
         }}>{message}</Alert>

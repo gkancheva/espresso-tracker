@@ -7,9 +7,11 @@ import { useNavigate } from "react-router";
 
 interface Props {
   bakery: Bakery;
+  hideLearnMore?: boolean;
+  children?: React.ReactNode;
 }
 
-export const BakeryCard = ({ bakery }: Props) => {
+export const BakeryCard = ({ bakery, hideLearnMore, children }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +20,7 @@ export const BakeryCard = ({ bakery }: Props) => {
         component="img"
         alt={bakery.name}
         height="140"
-        src={bakery.imgSrc ? bakery.imgSrc : 'espresso-shot.jpg'}
+        src={bakery.imgSrc ? bakery.imgSrc : '/espresso-shot.jpg'}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -37,8 +39,14 @@ export const BakeryCard = ({ bakery }: Props) => {
       </CardContent>
       <CardActions>
         <Button size="small" href={bakery.webSite} target='_blank'>Visit online</Button>
-        <Button size="small" onClick={() => navigate(`/bakeries/${bakery.id}`)}>Learn More</Button>
+        {
+          !hideLearnMore &&
+          <Button size="small" onClick={() => navigate(`/bakeries/${bakery.id}`)}>
+            Learn More
+          </Button>
+        }
       </CardActions>
+      {children}
     </Card>
   );
 

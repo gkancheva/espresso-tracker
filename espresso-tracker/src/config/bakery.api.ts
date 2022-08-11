@@ -1,6 +1,6 @@
 import { AxiosObservable } from "axios-observable/lib/axios-observable.interface";
 import { axiosInstance } from "../config/AxiosConfig";
-import { Bakery } from "../models/Bakery";
+import { Bakery, BakeryWithCoffees } from "../models/Bakery";
 
 export interface BakeryRequest {
   name: string;
@@ -18,5 +18,8 @@ export const useBakeryApi = () => {
   const createBakery = (request: BakeryRequest): AxiosObservable<number> =>
     axiosInstance.post<number>(`/bakeries`, request);
 
-  return { getBakeries, createBakery }
+  const fetchBakery = (id: number) =>
+    axiosInstance.get<BakeryWithCoffees>(`/bakeries/${id}`);
+
+  return { getBakeries, createBakery, fetchBakery }
 }

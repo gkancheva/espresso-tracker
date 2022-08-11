@@ -15,7 +15,10 @@ export const BakeryList = () => {
 
   const { getBakeryList } = useBakeryService(
     (result) => setData(result),
-    (err) => setErrMessage(err)
+    (err) => {
+      setErrMessage(err);
+      setNotificationIsVisible(true);
+    }
   );
 
   const navigate = useNavigate();

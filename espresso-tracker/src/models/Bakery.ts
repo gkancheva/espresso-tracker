@@ -1,3 +1,5 @@
+import { Coffee } from "../models/Coffee";
+
 export interface Bakery {
   id: number;
   name: string;
@@ -5,4 +7,9 @@ export interface Bakery {
   phoneNumber: string;
   webSite: string;
   imgSrc?: string;
+}
+
+export interface BakeryWithCoffees {
+  bakery: Bakery;
+  coffees: Coffee[];
 }
