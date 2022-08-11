@@ -1,6 +1,7 @@
 package com.softuni.espresso.tracker.service;
 
 import com.softuni.espresso.tracker.model.Bakery;
+import com.softuni.espresso.tracker.model.BakeryWithCoffees;
 import com.softuni.espresso.tracker.model.web.BakeryRequest;
 import com.softuni.espresso.tracker.model.mapper.BakeryMapper;
 import com.softuni.espresso.tracker.repository.BakeryRepository;
@@ -40,6 +41,14 @@ public class BakeryService {
             log.error("Unable to persist bakery: '{}'", request);
             throw new ContextException("Unable to persists bakery: " + request.getName());
         }
+    }
+
+    public BakeryWithCoffees getBakery(Long bakeryId) {
+        Optional<BakeryEntity> optBakery = repository.findByIdWithCoffees(bakeryId);
+        if (optBakery.isEmpty()) {
+            return null;
+        }
+        return mapper.mapToEnhancedModel(optBakery.get());
     }
 
 }

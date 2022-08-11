@@ -14,5 +14,8 @@ import java.time.LocalDate;
 public class Coffee {
     private final String name;
     private final String bakery;
+    private final String origin;
+    private final String description;
     private final LocalDate roastedOnDate;
+    private final int active;
 }

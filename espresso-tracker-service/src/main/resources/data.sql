@@ -15,7 +15,8 @@ insert into coffee_machines (name) values ('Rancilio Sylvia');
 
 insert into grinders (name) values ('Sette');
 
-insert into users (email, password, user_role, username) values ('admin@admin.com', 'test', 'ADMIN', 'admin');
+insert into users (email, password, user_role, username)
+    values ('admin@admin.com', '$2a$10$C33C99FgzILdrdEHsVwVhu4e8/Lh5KuzJNz0zKjBWer5MBSNzN4h6', 'ADMIN', 'admin');
 
 insert into coffees (name, origin, roasted_on_date, bakery_id, date_created, active)
     values ('Nicaragua', 'Nicaragua', '2022-08-08', 1, '2022-08-08', 1),

@@ -12,5 +12,4 @@ public class Bakery {
     private String phoneNumber;
     private String webSite;
     private String imgSrc;
-
 }

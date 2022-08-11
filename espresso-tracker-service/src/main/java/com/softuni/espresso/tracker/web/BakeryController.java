@@ -1,12 +1,15 @@
 package com.softuni.espresso.tracker.web;
 
 import com.softuni.espresso.tracker.model.Bakery;
+import com.softuni.espresso.tracker.model.BakeryWithCoffees;
 import com.softuni.espresso.tracker.model.web.BakeryRequest;
 import com.softuni.espresso.tracker.service.BakeryService;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +31,13 @@ public class BakeryController {
     @PostMapping("/bakeries")
     public ResponseEntity<Long> createBakery(@RequestBody @NotNull BakeryRequest request) {
         long bakeryId = bakeryService.createBakery(request);
-        return ResponseEntity.ok(bakeryId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(bakeryId);
+    }
+
+    @GetMapping("/bakeries/{id}")
+    public ResponseEntity<BakeryWithCoffees> getBakery(@PathVariable @NotNull Long id) {
+        BakeryWithCoffees bakery = bakeryService.getBakery(id);
+        return ResponseEntity.ok().body(bakery);
     }
 
 }
