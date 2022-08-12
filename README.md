@@ -10,7 +10,7 @@ Functionalities:
 - register
 - list bakeries
 - see bakery details (+ list available coffees)
-- add bakery
+- add coffee bakery
 - add coffee 
 - list own saved espresso setting for shots
 - add new espresso setting
