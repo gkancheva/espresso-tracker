@@ -8,5 +8,15 @@ export const checkInputIsValid = (str: string, max?: number): boolean => {
   return minLengthRespected && maxLengthRespected;
 }
 
+const NUMBER_FORMATTER = Intl.NumberFormat(
+  'en-us', {maximumFractionDigits: 2});
+
 export const checkNumberInput = (num: number, min: number, max: number): boolean =>
   !num ? false : num >= min && num <= max;
+
+export const formatNumber = (num?: number) => {
+  if (num == null) {
+    return 'N/A';
+  }
+  return NUMBER_FORMATTER.format(num);
+}
