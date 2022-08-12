@@ -3,7 +3,7 @@ package com.softuni.espresso.tracker.model.web;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -14,7 +14,7 @@ public class EspressoSettingRequest {
     @Size(min = 5, max = 25)
     private double dose;
 
-    @NotEmpty
+    @NotBlank
     private String grindingFineness;
 
     @Size(min = 80, max = 100)

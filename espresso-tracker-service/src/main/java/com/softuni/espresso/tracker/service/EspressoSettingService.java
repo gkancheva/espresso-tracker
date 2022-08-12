@@ -33,6 +33,7 @@ public class EspressoSettingService {
 
         return espressoSettingsEntities.stream()
                 .map(mapper::mapToModel)
+                .sorted((o1, o2) -> Long.compare(o2.getId(), o1.getId()))
                 .collect(Collectors.toList());
     }
 

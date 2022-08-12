@@ -6,17 +6,20 @@ import com.softuni.espresso.tracker.service.EspressoSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class EspressoSettingController {
 
     private final EspressoSettingService espressoSettingService;
@@ -29,7 +32,7 @@ public class EspressoSettingController {
 
     @PostMapping(value = "/espresso-settings", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> createEspressoSetting(
-            @RequestBody @NotNull EspressoSettingRequest request, HttpServletRequest httpRequest) {
+            @Valid @RequestBody @NotNull EspressoSettingRequest request, HttpServletRequest httpRequest) {
         Long result = espressoSettingService.createNewSetting(request, httpRequest.getRemoteUser());
         return ResponseEntity.ok(result);
     }

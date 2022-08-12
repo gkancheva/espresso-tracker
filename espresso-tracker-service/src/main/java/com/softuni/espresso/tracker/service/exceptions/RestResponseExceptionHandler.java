@@ -3,6 +3,7 @@ package com.softuni.espresso.tracker.service.exceptions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,7 +16,10 @@ import javax.validation.ValidationException;
 @RestControllerAdvice
 public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UserUnauthorizedException.class)
+    @ExceptionHandler({
+            UserUnauthorizedException.class,
+            UsernameNotFoundException.class
+    })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     protected ResponseEntity<ApiError> handleUnauthorized(RuntimeException ex) {
         log.error("Exception: {}", ex.getMessage(), ex);

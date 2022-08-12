@@ -30,7 +30,7 @@ public class SendNotificationService {
        sendNotification(LocalDate.now().minusDays(1));
     }
 
-    private void sendNotification(LocalDate date) {
+    protected void sendNotification(LocalDate date) {
         List<CoffeeEntity> coffees = coffeeRepository
                 .findAllByDateCreated(date).stream()
                 .sorted(Comparator.comparing(coffee -> coffee.getBakery().getName()))

@@ -1,10 +1,12 @@
 package com.softuni.espresso.tracker.model.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import java.util.List;
 @Table(name = "bakeries")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class BakeryEntity {
 
     @Id
@@ -37,6 +40,6 @@ public class BakeryEntity {
     @Column(columnDefinition = "TEXT")
     private String imgSrc;
 
-    @OneToMany(mappedBy = "bakery")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bakery")
     private List<CoffeeEntity> coffees;
 }

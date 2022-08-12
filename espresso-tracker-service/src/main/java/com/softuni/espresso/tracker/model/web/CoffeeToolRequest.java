@@ -4,7 +4,7 @@ import com.softuni.espresso.tracker.model.CoffeeToolType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -13,7 +13,7 @@ public class CoffeeToolRequest {
 
     private CoffeeToolType coffeeToolType;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 3, max = 100)
     private String name;
 }

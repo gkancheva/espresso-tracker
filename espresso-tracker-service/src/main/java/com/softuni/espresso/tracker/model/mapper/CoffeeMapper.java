@@ -6,6 +6,7 @@ import com.softuni.espresso.tracker.model.entities.CoffeeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,9 @@ public interface CoffeeMapper {
     CoffeeEntity mapToEntity(CoffeeRequest request);
 
     default List<Coffee> mapToList(List<CoffeeEntity> entities) {
+        if (entities == null) {
+            return Collections.emptyList();
+        }
         return entities.stream()
                 .map(this::mapToModel)
                 .collect(Collectors.toList());
