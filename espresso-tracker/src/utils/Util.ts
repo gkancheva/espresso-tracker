@@ -7,3 +7,6 @@ export const checkInputIsValid = (str: string, max?: number): boolean => {
   const maxLengthRespected = (max && str.trim().length <= max) || (str.trim().length < INPUT_TXT_MAX_LENGTH);
   return minLengthRespected && maxLengthRespected;
 }
+
+export const checkNumberInput = (num: number, min: number, max: number): boolean =>
+  !num ? false : num >= min && num <= max;

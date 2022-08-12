@@ -1,31 +1,26 @@
-import { useState } from "react";
-import { finalize } from "rxjs";
-import { EspressoSetting } from "../models/EspressoSetting";
-import { useEspressoApi } from "../config/espresso.api";
+import { EspressoSettingRequest} from "../models/EspressoSetting";
+import {createEspressoSettingApi, getEspressoSettingsApi} from "../config/espresso.api";
 
-interface EspressoSettingsService {
-  getEspressoSet: () => void;
-  isFetching: boolean;
-  data: EspressoSetting[];
-}
-
-export const useEspressoSettingsService = (): EspressoSettingsService => {
-  const { getEspressoSettings } = useEspressoApi();
-
-  const [isFetching, setIsFetching] = useState(false);
-  const [data, setData] = useState<EspressoSetting[]>([] as EspressoSetting[]);
+export const useEspressoSettingsService = (
+  onSuccess: (data: any) => void,
+  onFailure: (err: string) => void) => {
 
   const getEspressoSet = () => {
-    setIsFetching(true);
-    const subscription = getEspressoSettings()
-      .pipe(finalize(() => setIsFetching(false)))
+    const subscription = getEspressoSettingsApi()
       .subscribe({
-        next: (response) => setData(response.data),
-        error: (err) => console.log("error: " + err)
+        next: (response) => onSuccess(response.data),
+        error: (err) => onFailure(err.message)
       });
-
     return () => subscription.unsubscribe();
   }
 
-  return { isFetching, getEspressoSet, data }
+  const createEspressoSetting = (request: EspressoSettingRequest) => {
+    const subscription = createEspressoSettingApi(request).subscribe({
+      next: (response) => onSuccess(response.data),
+      error: (err) => onFailure(err.message)
+    });
+    return () => subscription.unsubscribe();
+  }
+
+  return { getEspressoSet, createEspressoSetting }
 }

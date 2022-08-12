@@ -3,7 +3,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Button from "@mui/material/Button";
 import * as React from "react";
 import { Box } from "@mui/material";
-import { checkInputIsValid } from "../utils/StringUtil";
+import { checkInputIsValid } from "../utils/Util";
 import { CustomTextField } from "../components/CustomTextField";
 
 interface Props {

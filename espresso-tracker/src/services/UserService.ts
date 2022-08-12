@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { finalize } from "rxjs";
-import { LoginRequest, loginUser, RegisterRequest, registerUser } from "../config/api";
+import { LoginRequest, loginUserApi, RegisterRequest, registerUserApi } from "../config/user.api";
 import { useAuth } from "../services/AuthService";
 
 export const useUserAuthentication = (
@@ -13,7 +13,7 @@ export const useUserAuthentication = (
   const sendLogin = (request: LoginRequest) => {
     setIsFetching(true);
 
-    const subscription = loginUser(request)
+    const subscription = loginUserApi(request)
       .pipe(finalize(() => setIsFetching(false)))
       .subscribe({
         next: (response) => {
@@ -33,7 +33,7 @@ export const useUserAuthentication = (
   const sendRegister = (request: RegisterRequest) => {
     setIsFetching(true);
 
-    const subscription = registerUser(request)
+    const subscription = registerUserApi(request)
       .pipe(finalize(() => setIsFetching(false)))
       .subscribe({
         next: () => onSuccess(),

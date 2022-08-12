@@ -1,4 +1,4 @@
-import { useCoffeeApi } from "../config/coffee.api";
+import {createCoffeeApi, getCoffeesApi} from "../config/coffee.api";
 import { Dayjs } from "dayjs";
 
 export interface CoffeeRequest {
@@ -10,7 +10,6 @@ export interface CoffeeRequest {
 }
 
 export const useCoffeeService = (onSuccess: (data: any) => void, onFailure: (errMessage: string) => void) => {
-  const { createCoffeeApi } = useCoffeeApi();
 
   const createCoffee = (request: CoffeeRequest) => {
     const subscription = createCoffeeApi(request).subscribe({
@@ -20,6 +19,14 @@ export const useCoffeeService = (onSuccess: (data: any) => void, onFailure: (err
     return () => subscription.unsubscribe();
   }
 
-  return { createCoffee }
+  const getCoffees = () => {
+    const subscription = getCoffeesApi().subscribe({
+      next: (response) => onSuccess(response.data),
+      error: (err) => onFailure(err.message)
+    });
+    return () => subscription.unsubscribe();
+  }
+
+  return { createCoffee, getCoffees }
 
 }

@@ -1,12 +1,10 @@
 import { AxiosObservable } from "axios-observable/lib/axios-observable.interface";
-import { EspressoSetting } from "../models/EspressoSetting";
 import { axiosInstance } from "../config/AxiosConfig";
 import { CoffeeRequest } from "../services/CoffeeService";
+import { Coffee } from "../models/Coffee";
 
-export const useCoffeeApi = () => {
+export const createCoffeeApi = (request: CoffeeRequest): AxiosObservable<Coffee[]> =>
+  axiosInstance.post<Coffee[]>(`/coffees`, request);
 
-  const createCoffeeApi = (request: CoffeeRequest): AxiosObservable<EspressoSetting[]> =>
-    axiosInstance.post<EspressoSetting[]>(`/coffees`, request);
-
-  return { createCoffeeApi }
-}
+export const getCoffeesApi = (): AxiosObservable<Coffee[]> =>
+  axiosInstance.get<Coffee[]>(`/coffees`);

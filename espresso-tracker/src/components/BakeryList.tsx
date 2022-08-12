@@ -5,20 +5,15 @@ import { useEffect, useState } from "react";
 import { BakeryCard } from "../components/BakeryCard";
 import { useBakeryService } from "../services/BakeryService";
 import { Bakery } from "../models/Bakery";
-import { Notification } from "../components/Notification";
 import { AddButton } from "../components/AddButton";
+import { GlobalNotificationProps } from "../components/Notification";
 
-export const BakeryList = () => {
-  const [notificationIsVisible, setNotificationIsVisible] = useState(false);
-  const [errMessage, setErrMessage] = useState<string>('');
+export const BakeryList = ({ showNotification }: GlobalNotificationProps) => {
   const [data, setData] = useState<Bakery[]>([] as Bakery[]);
 
   const { getBakeryList } = useBakeryService(
     (result) => setData(result),
-    (err) => {
-      setErrMessage(err);
-      setNotificationIsVisible(true);
-    }
+    (err) => showNotification(err, 'error')
   );
 
   const navigate = useNavigate();
@@ -35,12 +30,6 @@ export const BakeryList = () => {
       <AddButton
         onClick={() => navigate('/add-new-coffee')}
         text='Add new coffee' />
-      { notificationIsVisible && errMessage &&
-        <Notification
-          isVisible={notificationIsVisible}
-          message={errMessage}
-          notifyIsVisible={setNotificationIsVisible} />
-      }
       <Grid container spacing={2}>
         {
           data.map((bakeryItem: Bakery) => (

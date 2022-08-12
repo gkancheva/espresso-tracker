@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,19 +9,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { formatDate } from "../utils/DateUtils";
-import { useEspressoSettingsService } from "../services/EspressoSettingsService";
-import dayjs from "dayjs";
-import { useEffect } from "react";
-import { EspressoSetting } from "../models/EspressoSetting";
-import { EspressoSettingDetails } from "../components/EspressoSettingDetails";
-import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
-import { useNavigate } from "react-router";
+import { formatDate } from "../utils/DateUtils";
+import { useEspressoSettingsService } from "../services/EspressoSettingsService";
+import { EspressoSetting } from "../models/EspressoSetting";
+import { EspressoSettingDetails } from "../components/EspressoSettingDetails";
+import { GlobalNotificationProps } from "../components/Notification";
 
-export const EspressoSettingsTable = () => {
-  const { isFetching, getEspressoSet, data } = useEspressoSettingsService();
+export const EspressoSettingsTable = ({ showNotification }: GlobalNotificationProps) => {
+  const [data, setData] = useState<EspressoSetting[]>([] as EspressoSetting[]);
+
+  const { getEspressoSet } = useEspressoSettingsService(
+    (data) => setData(data),
+    (err) => showNotification(err, 'error')
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +36,6 @@ export const EspressoSettingsTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      { isFetching && <CircularProgress /> }
       <Button
         onClick={() => navigate('/add-new-espresso-shot')}
         size='small'

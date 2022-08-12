@@ -1,10 +1,17 @@
-import { BakeryRequest, useBakeryApi } from "../config/bakery.api";
+import { createBakeryApi, getBakeryApi, getBakeriesApi } from "../config/bakery.api";
+
+export interface BakeryRequest {
+  name: string;
+  address: string;
+  phone: string;
+  webSite: string;
+  imgSource?: string;
+}
 
 export const useBakeryService = (onSuccess: (data: any) => void, onFailure: (errMessage: string) => void) => {
-  const { getBakeries, createBakery, fetchBakery } = useBakeryApi();
 
   const getBakeryList = () => {
-    const subscription = getBakeries().subscribe({
+    const subscription = getBakeriesApi().subscribe({
       next: (response) => onSuccess(response.data),
       error: (err) => onFailure(err.message)
     });
@@ -13,7 +20,7 @@ export const useBakeryService = (onSuccess: (data: any) => void, onFailure: (err
   }
 
   const sendCreateBakery = (request: BakeryRequest) => {
-    const subscription = createBakery(request).subscribe({
+    const subscription = createBakeryApi(request).subscribe({
       next: (response) => onSuccess(response.data),
       error: (err) => onFailure(err.message)
     });
@@ -21,7 +28,7 @@ export const useBakeryService = (onSuccess: (data: any) => void, onFailure: (err
   }
 
   const getBakery = (id: number) => {
-    const subscription = fetchBakery(id).subscribe({
+    const subscription = getBakeryApi(id).subscribe({
       next: (response) => onSuccess(response.data),
       error: (err) => onFailure(err.message)
     });

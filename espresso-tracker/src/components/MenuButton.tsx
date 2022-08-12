@@ -2,11 +2,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import { Menu, MenuItem } from "@mui/material";
 import * as React from "react";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { CoffeeTool, CoffeeTools, CoffeeToolType, useCoffeeToolsService } from "../services/CoffeeToolsService";
 import { UpdateCoffeeToolsDialog } from "../components/UpdateCoffeeToolsDialog";
+import { useAuth } from "../services/AuthService";
 
-export const MenuButton = () => {
+import { GlobalNotificationProps } from "../components/Notification";
+
+export const MenuButton = ({ showNotification }: GlobalNotificationProps) => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -26,6 +33,11 @@ export const MenuButton = () => {
   );
 
   const showMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!isAuthenticated()) {
+      showNotification('You need to login to access the menu', 'warning');
+      navigate('/login');
+      return;
+    }
     setAnchorEl(event.currentTarget);
     setMenuVisible(true);
   };
@@ -68,17 +80,18 @@ export const MenuButton = () => {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}>
-        <MenuItem onClick={() =>
+        <MenuItem key={CoffeeToolType.COFFEE_MACHINE} onClick={() =>
           showEditingDialog(CoffeeToolType.COFFEE_MACHINE, coffeeTools?.coffeeMachine)}>
           Coffee machine {getModelNameText(coffeeTools?.coffeeMachine)}
         </MenuItem>
-        <MenuItem onClick={() => showEditingDialog(CoffeeToolType.GRINDER, coffeeTools?.grinder)}>
-          Grinder  {getModelNameText(coffeeTools?.grinder)}
+        <MenuItem key={CoffeeToolType.GRINDER} onClick={() => showEditingDialog(CoffeeToolType.GRINDER, coffeeTools?.grinder)}>
+          Grinder {getModelNameText(coffeeTools?.grinder)}
         </MenuItem>
       </Menu>
       {
         clickedToolType &&
         <UpdateCoffeeToolsDialog
+          showNotification={showNotification}
           type={clickedToolType}
           tool={clickedTool}
           dialogIsOpen={dialogOpen}

@@ -1,15 +1,9 @@
 import { AxiosObservable } from "axios-observable/lib/axios-observable.interface";
-import { EspressoSetting } from "../models/EspressoSetting";
+import {EspressoSetting, EspressoSettingRequest} from "../models/EspressoSetting";
 import { axiosInstance } from "../config/AxiosConfig";
-import { useAuth } from "../services/AuthService";
 
-export const useEspressoApi = () => {
-  const { getUser } = useAuth();
+export const getEspressoSettingsApi = (): AxiosObservable<EspressoSetting[]> =>
+  axiosInstance.get<EspressoSetting[]>(`/espresso-settings`);
 
-  const username = () => getUser()?.username
-
-  const getEspressoSettings = (): AxiosObservable<EspressoSetting[]> =>
-    axiosInstance.get<EspressoSetting[]>(`/${username()}/espresso-settings`);
-
-  return { getEspressoSettings }
-}
+export const createEspressoSettingApi = (request: EspressoSettingRequest): AxiosObservable<number> =>
+  axiosInstance.post<number>('/espresso-settings', request);

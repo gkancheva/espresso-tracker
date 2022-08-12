@@ -3,6 +3,10 @@ import Alert, { AlertColor} from '@mui/material/Alert';
 
 import { useState } from "react";
 
+export interface GlobalNotificationProps {
+  showNotification: (message: string, type?: AlertColor) => void;
+}
+
 interface NotificationProps {
   type?: AlertColor;
   message: string;

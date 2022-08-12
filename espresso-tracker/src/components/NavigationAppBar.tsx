@@ -5,14 +5,15 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../services/AuthService";
 import { CustomNavButton, ViewAccessType } from "../components/CustomNavButton";
 import { MenuButton } from "../components/MenuButton";
+import { GlobalNotificationProps } from "../components/Notification";
 
-export const NavigationAppBar = () => {
+export const NavigationAppBar = ({ showNotification }: GlobalNotificationProps) => {
   const { logoutUser } = useAuth();
 
   return (
     <AppBar position='static'>
       <Toolbar>
-        <MenuButton />
+        <MenuButton showNotification={showNotification} />
         <Typography style={{ flex: 1 }}>
           <CustomNavButton href='/bakeries' text={'Bakeries'} />
           <CustomNavButton

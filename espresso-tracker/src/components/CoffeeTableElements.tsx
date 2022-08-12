@@ -3,6 +3,7 @@ import Table from "@mui/material/Table";
 import Typography from "@mui/material/Typography";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 import dayjs from "dayjs";
 import * as React from "react";
 import { Coffee } from "../models/Coffee";
@@ -49,10 +50,12 @@ export const CoffeeTable = ({ coffees }: TableProps) => {
         List of available coffees
       </Typography>
       <Table>
-        <CoffeeHeader/>
-        {
-          coffees.map((coffee) => <CoffeeRow coffee={coffee} />)
-        }
+        <CoffeeHeader />
+        <TableBody>
+          {
+            coffees.map((coffee) => <CoffeeRow key={coffee.id} coffee={coffee} />)
+          }
+        </TableBody>
       </Table>
     </>
   );

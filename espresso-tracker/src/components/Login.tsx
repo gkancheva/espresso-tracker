@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
 import { useUserAuthentication } from "../services/UserService";
-import { Notification } from "../components/Notification";
-import { checkInputIsValid } from "../utils/StringUtil";
+import { checkInputIsValid } from "../utils/Util";
+import { GlobalNotificationProps } from "../components/Notification";
 
-export const Login = () => {
+export const Login = ({ showNotification }: GlobalNotificationProps) => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -15,17 +15,10 @@ export const Login = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [message, setMessage] = useState('');
-  const [notificationIsVisible, setNotificationIsVisible] = useState(false);
-
-  const setNotification = (message: string) => {
-    setMessage(message);
-    setNotificationIsVisible(true);
-  }
 
   const { sendLogin } = useUserAuthentication(
     () => navigate('/espresso-list'),
-    (err) => setNotification(err)
+    (err) => showNotification(err, 'error')
   );
 
   const handleUsernameChange = (input: string) => {
@@ -65,47 +58,40 @@ export const Login = () => {
   }, [username, password]);
 
   return (
-    <>
-      <Notification
-        type={'error'}
-        message={message}
-        isVisible={notificationIsVisible}
-        notifyIsVisible={setNotificationIsVisible} />
-      <Paper style={{padding: 20, width: 500, margin: '20px auto'}}>
-        <TextField
-          error={usernameError}
-          style={{marginTop: 8}}
-          label='Username'
-          type='text'
-          id='username'
-          fullWidth
-          required
-          variant={'standard'}
-          onChange={(event) => handleUsernameChange(event.target.value)}
-          helperText={usernameError && 'Username is empty'} />
-        <TextField
-          style={{marginTop: 8}}
-          error={passwordError}
-          label='Password'
-          type='password'
-          id='password'
-          fullWidth
-          required variant={'standard'}
-          onChange={(event) => handlePasswordChange(event.target.value)}
-          helperText={passwordError && 'Password cannot be empty'}/>
-        <Button
-          style={{marginTop: 8}}
-          disabled={btnDisabled}
-          variant={'contained'}
-          type="submit"
-          fullWidth
-          onClick={() => handleLogin()}>
-          Log in
-        </Button>
-        <Button href={'/register'} style={{marginTop: 8}} type={'button'} fullWidth>
-          Register
-        </Button>
-      </Paper>
-    </>
+    <Paper style={{padding: 20, width: 500, margin: '20px auto'}}>
+      <TextField
+        error={usernameError}
+        style={{marginTop: 8}}
+        label='Username'
+        type='text'
+        id='username'
+        fullWidth
+        required
+        variant={'standard'}
+        onChange={(event) => handleUsernameChange(event.target.value)}
+        helperText={usernameError && 'Username is empty'} />
+      <TextField
+        style={{marginTop: 8}}
+        error={passwordError}
+        label='Password'
+        type='password'
+        id='password'
+        fullWidth
+        required variant={'standard'}
+        onChange={(event) => handlePasswordChange(event.target.value)}
+        helperText={passwordError && 'Password cannot be empty'}/>
+      <Button
+        style={{marginTop: 8}}
+        disabled={btnDisabled}
+        variant={'contained'}
+        type="submit"
+        fullWidth
+        onClick={() => handleLogin()}>
+        Log in
+      </Button>
+      <Button href={'/register'} style={{marginTop: 8}} type={'button'} fullWidth>
+        Register
+      </Button>
+    </Paper>
   );
 }

@@ -16,9 +16,9 @@ interface LoginResponse {
   username: string;
 }
 
-export const loginUser = (request: LoginRequest): AxiosObservable<LoginResponse> =>
+export const loginUserApi = (request: LoginRequest): AxiosObservable<LoginResponse> =>
   axiosInstance.post<LoginResponse>("/users/login", request);
 
 
-export const registerUser = (request: RegisterRequest): AxiosObservable<string> =>
+export const registerUserApi = (request: RegisterRequest): AxiosObservable<string> =>
   axiosInstance.post<string>("/users/register", request);
