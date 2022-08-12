@@ -139,7 +139,7 @@ export const Register = ({ showNotification }: GlobalNotificationProps) => {
         onClick={() => handleRegister()}>
         Register
       </Button>
-      <Button style={{ marginTop: 8 }} href={'/login'} type={'button'} fullWidth>
+      <Button style={{ marginTop: 8 }} onClick={() => navigate('/login')} type={'button'} fullWidth>
         Log in
       </Button>
     </Paper>
