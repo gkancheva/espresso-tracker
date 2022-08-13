@@ -14,7 +14,7 @@ interface NotificationProps {
   notifyIsVisible: (isVisible: boolean) => void;
 }
 
-const TIMEOUT_SECONDS = 30000;
+const TIMEOUT_SECONDS = 10000;
 
 export const Notification = ({ type, message, isVisible, notifyIsVisible }: NotificationProps): JSX.Element => {
   const [visible, setIsVisible] = useState(isVisible);

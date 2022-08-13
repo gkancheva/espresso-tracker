@@ -8,8 +8,10 @@ import { Coffee } from "../models/Coffee";
 import { useCoffeeService } from "../services/CoffeeService";
 import { InputGridItem } from "../components/InputGridItem";
 import { useEspressoSettingsService } from "../services/EspressoSettingsService";
-import { checkInputIsValid, checkNumberInput } from "../utils/Util";
+import { checkNumberInput } from "../utils/Util";
 import { GlobalNotificationProps } from "../components/Notification";
+
+const MAX_GRINDING_FINESSE_LENGTH = 150;
 
 export const AddNewEspressoShot = ({ showNotification }: GlobalNotificationProps) => {
   const navigate = useNavigate();
@@ -51,7 +53,8 @@ export const AddNewEspressoShot = ({ showNotification }: GlobalNotificationProps
       setBtnDisabled(false);
     }
 
-  }, [coffeeId, dose, brewingTemperature, brewingPressure, volume, grindingFinnesse, extractDurationSec]);
+  }, [coffeeId, dose, brewingTemperature,
+    brewingPressure, volume, grindingFinnesse, extractDurationSec]);
 
   const handleOnClick = () => {
     const request = {
@@ -64,6 +67,15 @@ export const AddNewEspressoShot = ({ showNotification }: GlobalNotificationProps
       extractDurationSec: extractDurationSec
     }
     createEspressoSetting(request);
+  }
+
+  const checkGrindingFinesse = (value?: string) => {
+    if (!value || value.trim().length > MAX_GRINDING_FINESSE_LENGTH) {
+      setGrindingInError(true);
+      return;
+    }
+    setGrindingInError(false);
+    setGrindingFinesse(value);
   }
 
   return (
@@ -111,14 +123,7 @@ export const AddNewEspressoShot = ({ showNotification }: GlobalNotificationProps
             fullWidth
             variant={'outlined'}
             helperText={grindingInError && 'Coffee grind setting should not exceed 100 characters'}
-            onChange={(event) => {
-              if (!checkInputIsValid(event.target.value, 100)) {
-                setGrindingInError(true);
-                return;
-              }
-              setGrindingInError(false);
-              setGrindingFinesse(event.target.value);
-            }}
+            onChange={(event) => checkGrindingFinesse(event.target.value)}
           />
         </Grid>
 
