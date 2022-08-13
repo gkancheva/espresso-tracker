@@ -2,8 +2,10 @@
 App for tracking espresso shots brew configurations
 
 ### services:
-espresso-tracker (FE): react, material ui, typescript
-espresso-tracker-service (BE): java, spring boot, maven, hibernate and jpa, spring security (basic authorization)
+#### espresso-tracker (FE)
+react, material ui, typescript
+#### espresso-tracker-service (BE)
+java, spring boot, maven, hibernate and jpa, spring security (basic authorization)
 
 Functionalities:
 - login
