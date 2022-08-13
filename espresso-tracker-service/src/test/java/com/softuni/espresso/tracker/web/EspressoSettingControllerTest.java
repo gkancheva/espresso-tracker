@@ -29,7 +29,7 @@ class EspressoSettingControllerTest {
     @Test
     void createEspressoSetting_maxDoseExceeded() throws Exception {
         EspressoSettingRequest request = mockRequest();
-        request.setDose(5);
+        request.setDose(3);
         mockMvc.perform(post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonHelper.getMapper().writeValueAsString(request)))
@@ -62,7 +62,7 @@ class EspressoSettingControllerTest {
         EspressoSettingRequest request = new EspressoSettingRequest();
         request.setDose(18);
         request.setGrindingFineness("finesse");
-        request.setBrewingTemperature(92.0);
+        request.setBrewingTemperature(92.0f);
         request.setBrewingPressure(9);
         request.setVolume(20);
         request.setExtractDurationSec(20);

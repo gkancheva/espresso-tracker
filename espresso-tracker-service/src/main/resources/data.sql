@@ -10,10 +10,10 @@ insert into coffee_tools (name, coffee_tool_type)
 insert into users (email, password, user_role, username, coffee_machine_id, grinder_id)
     values ('admin@admin.com', '$2a$10$C33C99FgzILdrdEHsVwVhu4e8/Lh5KuzJNz0zKjBWer5MBSNzN4h6', 'ADMIN', 'admin', 1, 2);
 
-insert into coffees (name, origin, roasted_on_date, bakery_id, date_created, active)
-    values ('Nicaragua', 'Nicaragua', '2022-08-08', 1, '2022-08-08', 1),
-           ('Kenya', 'Kenya', '2022-08-09', 1, '2022-08-08', 1),
-           ('Honduras', 'Honduras', '2022-08-10', 2, '2022-08-08', 1);
+insert into coffees (name, origin, roasted_on_date, bakery_id, date_created, active, description)
+    values ('Nicaragua', 'Nicaragua', '2022-08-08', 1, '2022-08-08', 1, ' Кафе с мека текстура и характер. Наситено начало със сладки нотки на лешници, пралини и сушени плодове с послевкус на карамел.'),
+           ('Kenya', 'Kenya', '2022-08-09', 1, '2022-08-08', 1, 'Кафе с нежни нотки и вкусове на малина и жълти плодове'),
+           ('Honduras', 'Honduras', '2022-08-10', 2, '2022-08-08', 1, 'ОРГАНИЧНО ОТГЛЕДАНО комплексно кафе с мека киселинност и гладко, кадифено тяло.');
 
 insert into espresso_settings (brewing_pressure, brewing_temperature, dose, grinding_fineness, volume, coffee_id, coffee_machine_id, grinder_id, user_id, extract_duration_sec)
     values (9, 91.5, 18, '12C', 20, 1, 1, 1, 1, 20);

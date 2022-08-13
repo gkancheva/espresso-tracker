@@ -32,16 +32,16 @@ public class EspressoSettingEntity {
     @ManyToOne
     private CoffeeToolEntity grinder;
 
-    private double dose;
+    private float dose;
 
     @Column(nullable = false)
     private String grindingFineness;
 
-    private double brewingTemperature;
+    private float brewingTemperature;
 
-    private double brewingPressure;
+    private float brewingPressure;
 
-    private double volume;
+    private float volume;
 
     private int extractDurationSec;
 }

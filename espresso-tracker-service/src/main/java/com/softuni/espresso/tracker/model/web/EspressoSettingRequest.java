@@ -3,6 +3,8 @@ package com.softuni.espresso.tracker.model.web;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -11,22 +13,28 @@ import javax.validation.constraints.Size;
 public class EspressoSettingRequest {
     private long coffeeId;
 
-    @Size(min = 5, max = 25)
-    private double dose;
+    @Min(value = 5, message = "Dose must be min 5")
+    @Max(value = 25, message = "Dose must be less than 25")
+    private float dose;
 
     @NotBlank
+    @Size(max = 150, message = "Grind size mut be less than 150 characters")
     private String grindingFineness;
 
-    @Size(min = 80, max = 100)
-    private double brewingTemperature;
+    @Min(value = 80, message = "Brewing temperature should be less than 80")
+    @Max(value = 100, message = "Brewing temperature should be max 100")
+    private float brewingTemperature;
 
-    @Size(min = 2, max = 16)
-    private double brewingPressure;
+    @Min(value = 2, message = "Brewing pressure should be min 2")
+    @Max(value = 16, message = "Brewing pressure should be max 16")
+    private float brewingPressure;
 
-    @Size(min = 5, max = 150)
-    private double volume;
+    @Min(value = 5, message = "Volume should be min 5")
+    @Max(value = 150, message = "Volume should be max 150")
+    private float volume;
 
-    @Size(min = 10, max = 50)
+    @Min(value = 10, message = "Extract duration must be min 10")
+    @Max(value = 50, message = "Extract duration must be max 50")
     private int extractDurationSec;
 
 }
