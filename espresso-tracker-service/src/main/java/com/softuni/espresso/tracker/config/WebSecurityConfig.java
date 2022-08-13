@@ -35,6 +35,7 @@ public class WebSecurityConfig {
                 .antMatchers("/users/login", "/users/register")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/bakeries").permitAll()
+                .antMatchers(HttpMethod.GET, "/bakeries/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
