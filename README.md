@@ -7,7 +7,7 @@ react, material ui, typescript
 #### espresso-tracker-service (BE)
 java, spring boot, maven, hibernate and jpa, spring security (basic authorization)
 
-Functionalities:
+### Functionalities
 - login
 - register
 - list bakeries
